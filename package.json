@@ -1,0 +1,23 @@
+{
+  "name": "bamazon",
+  "version": "1.0.0",
+  "description": "HW 14 MySQL",
+  "main": "bamazonCustomer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WilliamL99/Bamazon.git"
+  },
+  "author": "William L.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WilliamL99/Bamazon/issues"
+  },
+  "homepage": "https://github.com/WilliamL99/Bamazon#readme",
+  "dependencies": {
+    "inquirer": "^6.2.1",
+    "mysql": "^2.16.0"
+  }
+}
