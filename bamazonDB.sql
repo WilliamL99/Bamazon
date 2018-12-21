@@ -24,3 +24,4 @@ VALUES ("iPhone X", "Technology", 1099, 20),
 ("echo Dot","Smart Home", 29.99, 30),
 ("Ring Alarm", "Smart Home", 179.99, 15);
 
+SELECT * FROM products;

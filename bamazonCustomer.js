@@ -14,58 +14,89 @@ var connection = mysql.createConnection({
 
 connection.connect(function(err) {
     if (err) throw err;
-    start();
+    displayInventory()
 });
 
-function buyProduct() {
-    connection.query("SELECT * FROM products", function (err, res) {
-        if(err) throw err;
-    inquirer
-        .prompt([
-            {
-               name: "choice",
-               type: "inpute",
-               choices: function(value) {
-                   var choiceArray = [];
-                   for (var i = 0; i < res.length; i++) {
-                       choiceArray.push(res[i].item_id);
-                   }
-                   console.table(choiceArray);
-               },
-               message: "What item_ID would you like to purchase?"
-            },
-        ]);
-        // .then(function(answer) {
-        //     var chosenItem;
-        //     for (var i = 0; i < res.length; i++) {
-        //         if (res[i].item_id === answer.choice) {
-        //             chosenItem = res[i];
-        //         }
-        //     }
-        // })
-
+function displayInventory () {
+    connection.query("SELECT * FROM PRODUCTS", function(err, res) {
+        if (err) throw err;
+        console.log(JSON.stringify(res, null, 2));
+        purchaseItems();
     });
 };
 
-function quantity(answer) {
-    connection.query("SELECT stock_quantity FROM products WHERE item_id = " + answer.choice, function (err, res) {
-        if(err) throw err;
-
-        inquirer
-        .prompt([
-            {
-                name: "choice",
-                type: "input",
-                message: "How many of this item would you like to purchase?" 
-            },
-        ])
-        .then(function(answer) {
-            if(parseInt(amount.choice) <= parseInt(res[0].stock_quantity)) {
-                console.log("There is enough you can buy.")
-                connection.query()
-            }
+function purchaseItems() {
+    inquirer
+        .prompt({
+            name: "action",
+            type: "list",
+            message: "Which product you wish to buy:",
+            choices: [
+                "iPhone",
+                "Apple Watch",
+                "Drone",
+                "Couch",
+                "Desk",
+                "Football",
+                "Basketball",
+                "Tennis Ball",
+                "echo Dot",
+                "Ring Alarm",
+                "Exit"
+            ]
         })
-    })
+        .then(function (answer) {
+            switch (answer.action){
+                case "iPhone":
+                getIphoneInput();
+                break;
+                case "Apple Watch":
+                getAppleWatchInput();
+                break;
+                case "Drone":
+                getDroneInput();
+                break;
+                case "Couch":
+                getCouchInput();
+                break;
+                case "Desk":
+                getDeskInput();
+                break;
+                case "Football":
+                getFootballInput();
+                break;
+                case "Basketball":
+                getBasketballInput();
+                break;
+                case "Tennis Ball":
+                getTennisballInput();
+                break;
+                case "echo Dot":
+                getEchodotInput();
+                break;
+                case "Ring Alarm":
+                getRingalarmInput();
+                break;
+                case "Exit":
+                console.log("Goodbye, nice doing business with you.");
+                connection.end();
+                break;
+            }
+        });
 }
 
+function getIphoneInput() {
+    inquirer
+        .prompt({
+            name: "iPhone",
+            type: "inpute",
+            message: "How man would you like?"
+        })
+        .then(function(answer){
+            byIphone(answer.iPhone);
+        });
+}
 
+function byIphone(iPhone) {
+    console.log("")
+}
