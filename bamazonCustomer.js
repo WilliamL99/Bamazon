@@ -18,7 +18,7 @@ connection.connect(function(err) {
 });
 
 function displayInventory () {
-    connection.query("SELECT * FROM PRODUCTS", function(err, res) {
+    connection.query("SELECT * FROM products", function(err, res) {
         if (err) throw err;
         console.log(JSON.stringify(res, null, 2));
         purchaseItems();
@@ -44,39 +44,26 @@ function purchaseItems() {
                 "Ring Alarm",
                 "Exit"
             ]
-        })
+        }, 
+            {
+                name: "quantity",
+                type: "input",
+                Message: "How Many would you like?"
+            })
         .then(function (answer) {
             switch (answer.action){
                 case "iPhone":
-                getIphoneInput();
-                break;
                 case "Apple Watch":
-                getAppleWatchInput();
-                break;
                 case "Drone":
-                getDroneInput();
-                break;
                 case "Couch":
-                getCouchInput();
-                break;
                 case "Desk":
-                getDeskInput();
-                break;
                 case "Football":
-                getFootballInput();
-                break;
                 case "Basketball":
-                getBasketballInput();
-                break;
                 case "Tennis Ball":
-                getTennisballInput();
-                break;
                 case "echo Dot":
-                getEchodotInput();
-                break;
                 case "Ring Alarm":
-                getRingalarmInput();
-                break;
+                    itemChecker(answer.action);
+                    break;
                 case "Exit":
                 console.log("Goodbye, nice doing business with you.");
                 connection.end();
@@ -85,18 +72,40 @@ function purchaseItems() {
         });
 }
 
-function getIphoneInput() {
-    inquirer
-        .prompt({
-            name: "iPhone",
-            type: "inpute",
-            message: "How man would you like?"
-        })
-        .then(function(answer){
-            byIphone(answer.iPhone);
-        });
-}
+var total = 0;
 
-function byIphone(iPhone) {
-    console.log("")
-}
+function itemChecker (shoppingCart) {
+    var query = connection.query(
+        "SELECT * FROM products WHERE product_name = answer.action",
+        console.log(query)
+    );
+};
+
+function shopping(){
+    var query = connection.query(
+        "SELECT * FROM products",
+        function (err, res) {
+            console.log("aright, cool \n total cost " + total)
+            inquirer
+                .prompt({
+                    name: "shop_again",
+                    type: "confirm",
+                    message: "you done?",
+                    default: 0
+                })
+                .then(function (answer) {
+                    if (answer.shop_again) {
+                        quitter();
+                    }
+                    else {
+                        itemLister()
+                    };
+                });
+        }
+    );
+};
+
+function quitter() {
+    console.log("so long, sucker!");
+    connection.end()
+};
